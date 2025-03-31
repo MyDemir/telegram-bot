@@ -1,10 +1,12 @@
 import Twit from 'twit';
 import { TWITTER_API_KEY, TWITTER_API_SECRET_KEY, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET } from '../config/config';
 import { Tweet, UserInfo } from './types';
-import { loadUserInfo, saveUserInfo } from './utils';
 
 // CommonJS tarzı import
 const TelegramBot = require('node-telegram-bot-api');
+// Türleri açıkça import et
+import TelegramBotTypes from 'node-telegram-bot-api';
+import { loadUserInfo, saveUserInfo } from './utils';
 
 const client = new Twit({
   consumer_key: TWITTER_API_KEY,
@@ -13,7 +15,7 @@ const client = new Twit({
   access_token_secret: TWITTER_ACCESS_TOKEN_SECRET
 });
 
-export async function checkTwitter(bot: TelegramBot): Promise<void> {
+export async function checkTwitter(bot: TelegramBotTypes): Promise<void> {
   const userInfo = await loadUserInfo();
   for (const [twitterUsername, data] of Object.entries(userInfo)) {
     if (!('last_tweet_id' in data)) continue;
@@ -36,7 +38,7 @@ export async function checkTwitter(bot: TelegramBot): Promise<void> {
   }
 }
 
-async function sendTweetNotification(bot: TelegramBot, tweet: Tweet, chatId: number): Promise<void> {
+async function sendTweetNotification(bot: TelegramBotTypes, tweet: Tweet, chatId: number): Promise<void> {
   const tweetUrl = `https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`;
   const text = `Yeni tweet! 🐦\n\n${tweet.full_text}\n\n🔗 [Tweeti Görüntüle](${tweetUrl})`;
   await bot.sendMessage(chatId, text, { parse_mode: 'Markdown', disable_web_page_preview: true });
