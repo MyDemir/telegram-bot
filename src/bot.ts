@@ -4,13 +4,15 @@ import { startHandler, setChannelsHandler, addTwitterHandler, forwardContentHand
 
 // CommonJS tarzı import
 const TelegramBot = require('node-telegram-bot-api');
+// Türleri açıkça import et
+import TelegramBotTypes from 'node-telegram-bot-api';
 
 const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
 
-bot.onText(/\/start/, (msg: TelegramBot.Message) => startHandler(bot, msg));
-bot.onText(/\/set_channels/, (msg: TelegramBot.Message) => setChannelsHandler(bot, msg));
-bot.onText(/\/add_twitter/, (msg: TelegramBot.Message) => addTwitterHandler(bot, msg));
-bot.on('message', (msg: TelegramBot.Message) => {
+bot.onText(/\/start/, (msg: TelegramBotTypes.Message) => startHandler(bot, msg));
+bot.onText(/\/set_channels/, (msg: TelegramBotTypes.Message) => setChannelsHandler(bot, msg));
+bot.onText(/\/add_twitter/, (msg: TelegramBotTypes.Message) => addTwitterHandler(bot, msg));
+bot.on('message', (msg: TelegramBotTypes.Message) => {
   if (!msg.text?.startsWith('/')) forwardContentHandler(bot, msg);
 });
 
