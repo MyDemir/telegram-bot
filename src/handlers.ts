@@ -1,12 +1,15 @@
-import * as TelegramBot from 'node-telegram-bot-api';
+// CommonJS tarzı import
+const TelegramBot = require('node-telegram-bot-api');
+// Türleri açıkça import et
+import TelegramBotTypes from 'node-telegram-bot-api';
 import { UserInfo } from './types';
 import { loadUserInfo, saveUserInfo } from './utils';
 
-export async function startHandler(bot: TelegramBot, msg: TelegramBot.Message): Promise<void> {
+export async function startHandler(bot: TelegramBotTypes, msg: TelegramBotTypes.Message): Promise<void> {
   await bot.sendMessage(msg.chat.id, "Merhaba! Bu bot, bir kanalda paylaşılan gönderileri diğer kanala bildirmek için tasarlandı. Kullanabileceğiniz komutlar:\n\n/set_channels @kaynakkanal @hedefkanal - Kaynak ve hedef kanalları ayarlayın.\n/add_twitter @kullaniciadi - Bir Twitter hesabı ekleyin.");
 }
 
-export async function setChannelsHandler(bot: TelegramBot, msg: TelegramBot.Message): Promise<void> {
+export async function setChannelsHandler(bot: TelegramBotTypes, msg: TelegramBotTypes.Message): Promise<void> {
   const args = msg.text?.split(' ').slice(1);
   if (args?.length !== 2) {
     await bot.sendMessage(msg.chat.id, "Lütfen iki kanal adı girin. Örnek: /set_channels @kaynakkanal @hedefkanal");
@@ -28,7 +31,7 @@ export async function setChannelsHandler(bot: TelegramBot, msg: TelegramBot.Mess
   await bot.sendMessage(msg.chat.id, `Kanallar ayarlandı!\nKaynak: ${sourceChannel} (${sourceChat.id})\nHedef: ${targetChannel} (${targetChat.id})`);
 }
 
-export async function addTwitterHandler(bot: TelegramBot, msg: TelegramBot.Message): Promise<void> {
+export async function addTwitterHandler(bot: TelegramBotTypes, msg: TelegramBotTypes.Message): Promise<void> {
   const args = msg.text?.split(' ').slice(1);
   if (args?.length !== 1) {
     await bot.sendMessage(msg.chat.id, "Lütfen bir Twitter kullanıcı adı girin. Örnek: /add_twitter @elonmusk");
@@ -50,7 +53,7 @@ export async function addTwitterHandler(bot: TelegramBot, msg: TelegramBot.Messa
   }
 }
 
-export async function forwardContentHandler(bot: TelegramBot, msg: TelegramBot.Message): Promise<void> {
+export async function forwardContentHandler(bot: TelegramBotTypes, msg: TelegramBotTypes.Message): Promise<void> {
   const userInfo = await loadUserInfo();
   const chatId = msg.chat.id;
   const userId = msg.from!.id;
