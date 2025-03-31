@@ -1,7 +1,9 @@
-import TelegramBot from 'node-telegram-bot-api';
-import { TELEGRAM_BOT_TOKEN } from '../config/config'; // Yol değişmedi
+import { TELEGRAM_BOT_TOKEN } from '../config/config';
 import { checkTwitter } from './twitter';
 import { startHandler, setChannelsHandler, addTwitterHandler, forwardContentHandler } from './handlers';
+
+// CommonJS tarzı import
+const TelegramBot = require('node-telegram-bot-api');
 
 const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
 
