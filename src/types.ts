@@ -10,7 +10,7 @@ export interface UserInfo {
 }
 
 export interface Tweet {
-  id: string;
+  id_str: string; // 'twit' tweet kimliklerini string olarak döner
   full_text: string;
   user: {
     screen_name: string;
