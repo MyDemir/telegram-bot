@@ -1,10 +1,9 @@
 import Twit from 'twit';
-import { TWITTER_API_KEY, TWITTER_API_SECRET_KEY, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET } from '../config/config';
+import { TWITTER_API_KEY, TWITTER_API_SECRET_KEY, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET } from '../config/config'; // Yol değişmedi
 import { Tweet, UserInfo } from './types';
-import { TelegramBot } from 'node-telegram-bot-api';
+import TelegramBot from 'node-telegram-bot-api';
 import { loadUserInfo, saveUserInfo } from './utils';
 
-// Twit istemcisini başlat
 const client = new Twit({
   consumer_key: TWITTER_API_KEY,
   consumer_secret: TWITTER_API_SECRET_KEY,
