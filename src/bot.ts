@@ -1,14 +1,14 @@
-import * as TelegramBot from 'node-telegram-bot-api';
-import { TELEGRAM_BOT_TOKEN } from '../config/config';
+import TelegramBot from 'node-telegram-bot-api';
+import { TELEGRAM_BOT_TOKEN } from '../config/config'; // Yol değişmedi
 import { checkTwitter } from './twitter';
 import { startHandler, setChannelsHandler, addTwitterHandler, forwardContentHandler } from './handlers';
 
 const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
 
-bot.onText(/\/start/, (msg) => startHandler(bot, msg));
-bot.onText(/\/set_channels/, (msg) => setChannelsHandler(bot, msg));
-bot.onText(/\/add_twitter/, (msg) => addTwitterHandler(bot, msg));
-bot.on('message', (msg) => {
+bot.onText(/\/start/, (msg: TelegramBot.Message) => startHandler(bot, msg));
+bot.onText(/\/set_channels/, (msg: TelegramBot.Message) => setChannelsHandler(bot, msg));
+bot.onText(/\/add_twitter/, (msg: TelegramBot.Message) => addTwitterHandler(bot, msg));
+bot.on('message', (msg: TelegramBot.Message) => {
   if (!msg.text?.startsWith('/')) forwardContentHandler(bot, msg);
 });
 
